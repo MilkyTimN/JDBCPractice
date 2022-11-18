@@ -5,7 +5,7 @@ import java.util.Date;
 public abstract class BaseEntity {
     private Long id;
     private String name;
-    private boolean active;
+    private Boolean active;
     private Date addDate;
 
     public Long getId() {
