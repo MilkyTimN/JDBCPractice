@@ -4,7 +4,7 @@ public class Users extends BaseEntity{
 
     private String login;
     private String password;
-    private Shop shopId;
+    private Long shopId;
 
     public String getLogin() {
         return login;
@@ -22,11 +22,11 @@ public class Users extends BaseEntity{
         this.password = password;
     }
 
-    public Shop getShopId() {
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(Shop shopId) {
+    public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
 }
