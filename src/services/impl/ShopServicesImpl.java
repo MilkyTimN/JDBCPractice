@@ -21,9 +21,12 @@ public class ShopServicesImpl implements ShopServices {
     public void save(Shop shop) {
         try (PreparedStatement preparedStatement = dbHelper.getStatement
                 ("INSERT INTO tb_shop(name, add_date, active) values(?,?,?)")) {
+
             preparedStatement.setString(1, shop.getName());
             preparedStatement.setString(2, new Date().toString());
             preparedStatement.setBoolean(3, true);
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new SqlException("Error to save shop into DB");
         }
@@ -34,8 +37,11 @@ public class ShopServicesImpl implements ShopServices {
 
         try(PreparedStatement preparedStatement = dbHelper.getStatement
                 ("UPDATE tb_shop SET name =? WHERE id =?")) {
+
             preparedStatement.setString(1, shop.getName());
             preparedStatement.setLong(2, shop.getId());
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e){
             throw new SqlException("Error to update shop to DB");
         }
@@ -91,9 +97,11 @@ public class ShopServicesImpl implements ShopServices {
     @Override
     public void delete(Long id) {
         try(PreparedStatement preparedStatement = dbHelper.getStatement
-                ("UPDATE tb_shop SET active =? WHERE id =?")){
+                ("UPDATE tb_shop SET active = ? WHERE id =?")){
             preparedStatement.setBoolean(1, false);
             preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new SqlException("Error to delete shop");
         }

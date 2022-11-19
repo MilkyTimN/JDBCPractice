@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UsersServiceImpl implements UsersService {
@@ -24,8 +25,9 @@ public class UsersServiceImpl implements UsersService {
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setBoolean(4, user.isActive());
-            preparedStatement.setString(5, user.getAddDate().toString());
+            preparedStatement.setString(5, new Date().toString());
             preparedStatement.setLong(6, user.getShopId());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new SqlException("Error to save user");
@@ -41,6 +43,7 @@ public class UsersServiceImpl implements UsersService {
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setLong(4, user.getShopId());
+            preparedStatement.executeUpdate();
 
         }catch (SQLException e) {
             throw new SqlException("Error to update user");
@@ -98,9 +101,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void delete(Long id) {
         try(PreparedStatement preparedStatement = dbHelper.getStatement
-                ("UPDATE tb_users SET active =? WHERE id =?")) {
+                ("UPDATE tb_users SET active = ? WHERE id =?")) {
             preparedStatement.setBoolean(1, false);
             preparedStatement.setLong(2, id);
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e){
             throw new SqlException("Error to delete user");
