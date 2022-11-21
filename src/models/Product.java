@@ -3,7 +3,7 @@ package models;
 public class Product extends BaseEntity{
     private Double price;
     private Integer discount;
-    private Long categoryId;
+    private Categories categoryId;
 
     public Double getPrice() {
         return price;
@@ -21,11 +21,11 @@ public class Product extends BaseEntity{
         this.discount = discount;
     }
 
-    public Long getCategoryId() {
+    public Categories getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(Categories categoryId) {
         this.categoryId = categoryId;
     }
 }

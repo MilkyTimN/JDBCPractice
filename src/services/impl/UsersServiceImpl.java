@@ -3,7 +3,9 @@ package services.impl;
 import dao.DbHelper;
 import dao.exceptions.SqlException;
 import dao.impl.DbHelperImpl;
+import models.Shop;
 import models.Users;
+import services.ShopServices;
 import services.UsersService;
 
 import java.sql.PreparedStatement;
@@ -12,9 +14,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class UsersServiceImpl implements UsersService {
     DbHelper dbHelper = new DbHelperImpl();
+    ShopServices shopServices = new ShopServicesImpl();
+    Scanner scanner = new Scanner(System.in);
 
     @Override
     public void save(Users user) {
@@ -26,7 +31,7 @@ public class UsersServiceImpl implements UsersService {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setBoolean(4, user.isActive());
             preparedStatement.setString(5, new Date().toString());
-            preparedStatement.setLong(6, user.getShopId());
+            preparedStatement.setLong(6, user.getShopId().getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -42,7 +47,7 @@ public class UsersServiceImpl implements UsersService {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setLong(4, user.getShopId());
+            preparedStatement.setLong(4, user.getShopId().getId());
             preparedStatement.executeUpdate();
 
         }catch (SQLException e) {
@@ -55,7 +60,8 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> findAll() {
 
         try(PreparedStatement preparedStatement = dbHelper.getStatement
-                ("SELECT * FROM tb_users WHERE active =?")) {
+                ("SELECT" +
+                        " * FROM tb_users WHERE active =?")) {
             preparedStatement.setBoolean(1, true);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Users> usersList = new ArrayList<>();
@@ -65,7 +71,7 @@ public class UsersServiceImpl implements UsersService {
                 user.setName(resultSet.getString("name"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
-                user.setShopId(resultSet.getLong("id_tb_shop"));
+                user.setShopId(shopServices.findById(user.getShopId().getId()));
 
                 usersList.add(user);
             } return usersList;
@@ -87,7 +93,7 @@ public class UsersServiceImpl implements UsersService {
             while (resultSet.next()){
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
-                user.setShopId(resultSet.getLong("id_tb_shop"));
+                user.setShopId(shopServices.findById(user.getShopId().getId()));
                 user.setAddDate(resultSet.getDate("add_date"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
@@ -109,5 +115,14 @@ public class UsersServiceImpl implements UsersService {
         } catch (SQLException e){
             throw new SqlException("Error to delete user");
         }
+    }
+
+    public void create() {
+        System.out.println("Напишите название магазина ");
+
+        Users user = new Users();
+        user.setName(scanner.next());
+
+        save(user);
     }
 }

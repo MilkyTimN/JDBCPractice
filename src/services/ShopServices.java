@@ -20,4 +20,5 @@ public interface ShopServices extends BaseEntity<Shop> {
 
     @Override
     void delete(Long id);
+
 }

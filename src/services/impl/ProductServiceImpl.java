@@ -4,6 +4,8 @@ import dao.DbHelper;
 import dao.exceptions.SqlException;
 import dao.impl.DbHelperImpl;
 import models.Product;
+import models.Shop;
+import services.CategoryService;
 import services.ProductService;
 
 import java.sql.PreparedStatement;
@@ -12,10 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProductServiceImpl implements ProductService {
 
     DbHelper dbHelper = new DbHelperImpl();
+    CategoryService categoryService = new CategoryServiceImpl();
+    Scanner scanner = new Scanner(System.in);
 
     @Override
     public void save(Product product) {
@@ -25,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
             preparedStatement.setString(1, new Date().toString());
             preparedStatement.setString(2, product.getName());
             preparedStatement.setDouble(3, product.getPrice());
-            preparedStatement.setLong(4, product.getCategoryId());
+            preparedStatement.setLong(4, product.getCategoryId().getId());
             preparedStatement.setInt(5, product.getDiscount());
             preparedStatement.executeUpdate();
 
@@ -41,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
 
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setLong(3, product.getCategoryId());
+            preparedStatement.setLong(3, product.getCategoryId().getId());
             preparedStatement.setInt(4, product.getDiscount());
             preparedStatement.executeUpdate();
 
@@ -65,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 
                 product.setId(resultSet.getLong("id"));
                 product.setName(resultSet.getString("name"));
-                product.setCategoryId(resultSet.getLong("id_tb_categories"));
+                product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
                 product.setPrice(resultSet.getDouble("price"));
                 product.setDiscount(resultSet.getInt("discount"));
 
@@ -89,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
             while (resultSet.next()) {
                 product.setId(resultSet.getLong("id"));
                 product.setName(resultSet.getString("name"));
-                product.setCategoryId(resultSet.getLong("id_tb_categories"));
+                product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
                 product.setPrice(resultSet.getDouble("price"));
                 product.setDiscount(resultSet.getInt("discount"));
 
@@ -112,6 +117,5 @@ public class ProductServiceImpl implements ProductService {
         } catch (SQLException e) {
             throw new SqlException("Error to delete product");
         }
-
     }
 }

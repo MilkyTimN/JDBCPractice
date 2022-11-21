@@ -19,4 +19,5 @@ public interface ProductService extends BaseEntity<Product>{
 
     @Override
     void delete(Long id);
+
 }

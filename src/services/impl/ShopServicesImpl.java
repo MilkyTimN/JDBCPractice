@@ -12,10 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class ShopServicesImpl implements ShopServices {
 
     DbHelper dbHelper = new DbHelperImpl();
+    Scanner scanner = new Scanner(System.in);
 
     @Override
     public void save(Shop shop) {
@@ -106,4 +108,5 @@ public class ShopServicesImpl implements ShopServices {
             throw new SqlException("Error to delete shop");
         }
     }
+
 }
