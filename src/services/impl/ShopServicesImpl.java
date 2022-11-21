@@ -27,7 +27,8 @@ public class ShopServicesImpl implements ShopServices {
             preparedStatement.setString(1, shop.getName());
             preparedStatement.setString(2, new Date().toString());
             preparedStatement.setBoolean(3, true);
-            preparedStatement.executeUpdate();
+//            preparedStatement.executeUpdate();
+
 
         } catch (SQLException e) {
             throw new SqlException("Error to save shop into DB");

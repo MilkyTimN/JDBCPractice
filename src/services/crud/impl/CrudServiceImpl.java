@@ -40,6 +40,7 @@ public class CrudServiceImpl implements CrudService {
                 System.out.println("Enter shop name ");
                 shop.setName(scanner.next());
                 shopServices.save(shop);
+                System.out.println("Shop saved");
                 break;
             case 2:
                 shopServices.findAll();
@@ -54,6 +55,7 @@ public class CrudServiceImpl implements CrudService {
             case 5:
                 System.out.println("Enter id ");
                 shopServices.delete(scanner.nextLong());
+                System.out.println("Shop deleted");
         }
     }
 
@@ -86,6 +88,7 @@ public class CrudServiceImpl implements CrudService {
             case 5:
                 System.out.println("Enter id ");
                 categoryService.delete(scanner.nextLong());
+                System.out.println("Category deleted");
         }
     }
 
@@ -123,6 +126,7 @@ public class CrudServiceImpl implements CrudService {
             case 5:
                 System.out.println("Enter id ");
                 usersService.delete(scanner.nextLong());
+                System.out.println("User deleted");
         }
 
     }
@@ -160,7 +164,8 @@ public class CrudServiceImpl implements CrudService {
                 break;
             case 5:
                 System.out.println("Enter id ");
-                usersService.delete(scanner.nextLong());
+                productService.delete(scanner.nextLong());
+                System.out.println("Product deleted");
         }
     }
 }
