@@ -6,4 +6,5 @@ public interface CrudService {
     void getCategoryControl();
     void getUserControl();
     void getProductControl();
+    void getCheckProductControl();
 }

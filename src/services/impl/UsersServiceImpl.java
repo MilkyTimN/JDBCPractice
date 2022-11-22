@@ -24,14 +24,14 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void save(Users user) {
         try(PreparedStatement preparedStatement = dbHelper.getStatement
-                ("INSERT tb_users SET (name, login, password, active, add_date, id_tb_shop) VALUES (?,?,?,?,?,?)")) {
+                ("INSERT INTO tb_users (name, login, password, active, add_date, id_tb_shop) VALUES (?,?,?,?,?,?)")) {
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setBoolean(4, user.isActive());
+            preparedStatement.setBoolean(4, true);
             preparedStatement.setString(5, new Date().toString());
-            preparedStatement.setLong(6, user.getShopId().getId());
+            preparedStatement.setLong(6, user.getShop().getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -47,7 +47,7 @@ public class UsersServiceImpl implements UsersService {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setLong(4, user.getShopId().getId());
+           // preparedStatement.setLong(4, user.getShopId().getId());
             preparedStatement.executeUpdate();
 
         }catch (SQLException e) {
@@ -60,8 +60,7 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> findAll() {
 
         try(PreparedStatement preparedStatement = dbHelper.getStatement
-                ("SELECT" +
-                        " * FROM tb_users WHERE active =?")) {
+                ("SELECT * FROM tb_users WHERE active =?")) {
             preparedStatement.setBoolean(1, true);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Users> usersList = new ArrayList<>();
@@ -69,9 +68,11 @@ public class UsersServiceImpl implements UsersService {
                 Users user = new Users();
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
+                user.setActive(resultSet.getBoolean("active"));
+                user.setAddDate(resultSet.getString("add_date"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
-                user.setShopId(shopServices.findById(user.getShopId().getId()));
+                user.setShop(shopServices.findById(resultSet.getLong("id_tb_shop")));
 
                 usersList.add(user);
             } return usersList;
@@ -91,12 +92,13 @@ public class UsersServiceImpl implements UsersService {
             ResultSet resultSet = preparedStatement.executeQuery();
             Users user = new Users();
             while (resultSet.next()){
+
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
-                user.setShopId(shopServices.findById(user.getShopId().getId()));
-                user.setAddDate(resultSet.getDate("add_date"));
                 user.setLogin(resultSet.getString("login"));
                 user.setPassword(resultSet.getString("password"));
+                user.setShop(shopServices.findById(resultSet.getLong("id_tb_shop")));
+
             } return user;
 
         } catch (SQLException e) {

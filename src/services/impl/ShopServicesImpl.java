@@ -17,7 +17,6 @@ import java.util.Scanner;
 public class ShopServicesImpl implements ShopServices {
 
     DbHelper dbHelper = new DbHelperImpl();
-    Scanner scanner = new Scanner(System.in);
 
     @Override
     public void save(Shop shop) {
@@ -27,11 +26,12 @@ public class ShopServicesImpl implements ShopServices {
             preparedStatement.setString(1, shop.getName());
             preparedStatement.setString(2, new Date().toString());
             preparedStatement.setBoolean(3, true);
-//            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
 
         } catch (SQLException e) {
-            throw new SqlException("Error to save shop into DB");
+            //throw new SqlException("Error to save shop into DB");
+            SqlException.printSQLException(e);
         }
     }
 
@@ -63,7 +63,28 @@ public class ShopServicesImpl implements ShopServices {
                 shop.setId(resultSet.getLong("id"));
                 shop.setName(resultSet.getString("name"));
                 shop.setActive(resultSet.getBoolean("active"));
-                shop.setAddDate(resultSet.getDate("add_date"));
+                shop.setAddDate(resultSet.getString("add_date"));
+
+                shopList.add(shop);
+
+            } return shopList;
+
+        } catch (SQLException e) {
+            throw new SqlException("Error to output shop form data");
+        }
+    }
+
+    public List<Shop> findAllIdName() {
+        try (PreparedStatement preparedStatement = dbHelper.getStatement
+                ("SELECT * FROM tb_shop WHERE active =?")) {
+            preparedStatement.setBoolean(1, true);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Shop>shopList = new ArrayList<>();
+            while (resultSet.next()){
+                Shop shop = new Shop();
+
+                shop.setId(resultSet.getLong("id"));
+                shop.setName(resultSet.getString("name"));
 
                 shopList.add(shop);
 
@@ -78,16 +99,16 @@ public class ShopServicesImpl implements ShopServices {
     public Shop findById(Long id) {
 
         try (PreparedStatement preparedStatement = dbHelper.getStatement
-                ("SELECT * FORM tb_shop WHERE id =?")){
+                ("SELECT * FROM tb_shop WHERE id =?")){
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Shop shop = new Shop();
-
-            while (resultSet.next()) {
+            while (resultSet.next()){
                 shop.setId(resultSet.getLong("id"));
                 shop.setName(resultSet.getString("name"));
                 shop.setActive(resultSet.getBoolean("active"));
-                shop.setAddDate(resultSet.getDate("add_date"));
+                shop.setAddDate(resultSet.getString("add_date"));
+
 
             } return shop;
 

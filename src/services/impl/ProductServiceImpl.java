@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 
                 product.setId(resultSet.getLong("id"));
                 product.setName(resultSet.getString("name"));
-                product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
+               // product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
                 product.setPrice(resultSet.getDouble("price"));
                 product.setDiscount(resultSet.getInt("discount"));
 
@@ -92,11 +92,14 @@ public class ProductServiceImpl implements ProductService {
             Product product = new Product();
 
             while (resultSet.next()) {
+
+
                 product.setId(resultSet.getLong("id"));
                 product.setName(resultSet.getString("name"));
-                product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
+                // product.setCategoryId(categoryService.findById(product.getCategoryId().getId()));
                 product.setPrice(resultSet.getDouble("price"));
                 product.setDiscount(resultSet.getInt("discount"));
+
 
             } return product;
 

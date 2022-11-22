@@ -1,64 +1,31 @@
 package services.crud.impl;
 
-import models.Categories;
-import models.Product;
-import models.Shop;
-import models.Users;
-import services.CategoryService;
-import services.ProductService;
-import services.ShopServices;
-import services.UsersService;
+import models.*;
+import services.*;
 import services.crud.CrudService;
-import services.impl.CategoryServiceImpl;
-import services.impl.ProductServiceImpl;
-import services.impl.ShopServicesImpl;
-import services.impl.UsersServiceImpl;
-
+import services.crud.impl.crudServices.CrudShopControl;
+import services.crud.impl.crudServices.CrudUserControl;
+import services.impl.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class CrudServiceImpl implements CrudService {
 
     Scanner scanner = new Scanner(System.in);
-    ShopServices shopServices = new ShopServicesImpl();
     CategoryService categoryService = new CategoryServiceImpl();
     UsersService usersService = new UsersServiceImpl();
     ProductService productService = new ProductServiceImpl();
+    CrudShopControl crudShopControl = new CrudShopControl();
+    CrudUserControl crudUserControl = new CrudUserControl();
+    ShopServices shopServices = new ShopServicesImpl();
+    Users user = new Users();
 
     @Override
     public void getShopControl() {
-
-        System.out.println("Choose action ");
-        System.out.println("1. Save");
-        System.out.println("2. Output all");
-        System.out.println("3. Output by id");
-        System.out.println("4. Edit (under development)");
-        System.out.println("5. Delete by id");
-
-        switch (scanner.nextInt()){
-            case 1:
-                Shop shop = new Shop();
-                System.out.println("Enter shop name ");
-                shop.setName(scanner.next());
-                shopServices.save(shop);
-                System.out.println("Shop saved");
-                break;
-            case 2:
-                shopServices.findAll();
-                break;
-            case 3:
-                System.out.println("Enter id");
-                shopServices.findById(scanner.nextLong());
-                break;
-            case 4:
-                System.out.println("Action 'Edit' is under development");
-                break;
-            case 5:
-                System.out.println("Enter id ");
-                shopServices.delete(scanner.nextLong());
-                System.out.println("Shop deleted");
-        }
+        crudShopControl.shopStart();
     }
 
+    //TODO
     @Override
     public void getCategoryControl() {
         System.out.println("Choose action ");
@@ -94,43 +61,10 @@ public class CrudServiceImpl implements CrudService {
 
     @Override
     public void getUserControl() {
-        System.out.println("Choose action ");
-        System.out.println("1. Save");
-        System.out.println("2. Output all");
-        System.out.println("3. Output by id");
-        System.out.println("4. Edit (under development)");
-        System.out.println("5. Delete by id");
-
-        switch (scanner.nextInt()){
-            case 1:
-                Users users = new Users();
-
-                System.out.println("Enter user name");
-                users.setName(scanner.next());
-                System.out.println("Enter user login");
-                users.setLogin(scanner.next());
-                System.out.println("Enter user password");
-                users.setPassword(scanner.next());
-                usersService.save(users);
-                break;
-            case 2:
-                usersService.findAll();
-                break;
-            case 3:
-                System.out.println("Enter id");
-                usersService.findById(scanner.nextLong());
-                break;
-            case 4:
-                System.out.println("Action 'Edit' is under development");
-                break;
-            case 5:
-                System.out.println("Enter id ");
-                usersService.delete(scanner.nextLong());
-                System.out.println("User deleted");
-        }
-
+        crudUserControl.userStart();
     }
 
+    //TODO
     @Override
     public void getProductControl() {
         System.out.println("Choose action ");
@@ -167,5 +101,11 @@ public class CrudServiceImpl implements CrudService {
                 productService.delete(scanner.nextLong());
                 System.out.println("Product deleted");
         }
+    }
+
+    //TODO
+    @Override
+    public void getCheckProductControl() {
+
     }
 }

@@ -6,27 +6,17 @@ import java.util.List;
 
 public interface CategoryService extends BaseEntity<Categories>{
     @Override
-    default void save(Categories categories) {
-
-    }
+    void save(Categories categories);
 
     @Override
-    default void update(Categories categories) {
-
-    }
+    void update(Categories categories);
 
     @Override
-    default List<Categories> findAll() {
-        return null;
-    }
+    List<Categories> findAll();
 
     @Override
-    default Categories findById(Long id) {
-        return null;
-    }
+    Categories findById(Long id);
 
     @Override
-    default void delete(Long id) {
-
-    }
+    void delete(Long id);
 }

@@ -15,10 +15,14 @@ public interface ShopServices extends BaseEntity<Shop> {
     @Override
     List<Shop> findAll();
 
+    List<Shop> findAllIdName();
+
     @Override
     Shop findById(Long id);
 
     @Override
     void delete(Long id);
+
+
 
 }

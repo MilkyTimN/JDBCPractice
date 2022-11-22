@@ -11,12 +11,19 @@ import java.sql.SQLException;
 public class DbHelperImpl implements DbHelper {
 
     @Override
-    public PreparedStatement getStatement(String sql) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test",
-                "postgres", "1006")){
-            return connection.prepareStatement(sql);
-        } catch (SQLException e) {
-            throw new SqlException("Error connecting to DB");
-        }
+    public PreparedStatement getStatement(String sql) throws SQLException{
+
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test",
+                "postgres", "1006");
+        return connection.prepareStatement(sql);
+
+
+
+//        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test",
+//                "postgres", "1006")){
+//            return connection.prepareStatement(sql);
+//        } catch (SQLException e) {
+//            throw new SqlException("Error connecting to DB");
+//        }
     }
 }

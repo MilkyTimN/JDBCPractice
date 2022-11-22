@@ -65,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
                 categories.setId(resultSet.getLong("id"));
                 categories.setName(resultSet.getString("name"));
                 categories.setActive(resultSet.getBoolean("active"));
-                categories.setAddDate(resultSet.getDate("add_date"));
+                categories.setAddDate(resultSet.getString("add_date"));
 
                 categoriesList.add(categories);
 
@@ -84,12 +84,13 @@ public class CategoryServiceImpl implements CategoryService {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Categories categories = new Categories();
+            while (resultSet.next()){
 
-            while (resultSet.next()) {
                 categories.setId(resultSet.getLong("id"));
                 categories.setName(resultSet.getString("name"));
                 categories.setActive(resultSet.getBoolean("active"));
-                categories.setAddDate(resultSet.getDate("add_date"));
+                categories.setAddDate(resultSet.getString("add_date"));
+
 
             } return categories;
 
