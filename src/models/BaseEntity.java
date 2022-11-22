@@ -5,8 +5,8 @@ import java.util.Date;
 public abstract class BaseEntity {
     private Long id;
     private String name;
-    private boolean active;
-    private Date addDate;
+    private Boolean active;
+    private String  addDate;
 
     public Long getId() {
         return id;
@@ -32,11 +32,25 @@ public abstract class BaseEntity {
         this.active = active;
     }
 
-    public Date getAddDate() {
+    public String getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(String addDate) {
         this.addDate = addDate;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "| id: " + id +
+                "| name: " + name +
+                "| active: " + active +
+                "| addDate: " + addDate;
+    }
+
+
+    public void toStringIdName() {
+        System.out.println(id + ": " + name);
     }
 }

@@ -28,16 +28,15 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="61dc6f48-42ba-4132-87f9-b1175308a83a">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main" />
-      <console name="Connection 1" type="STANDARD" schema="information_schema" session="Main" />
+    <connection id="39cb4ad4-cea5-4211-ac6b-9da850317cd9">
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[select * from tb_shop;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="61dc6f48-42ba-4132-87f9-b1175308a83a" />
+    <connection id="39cb4ad4-cea5-4211-ac6b-9da850317cd9" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -68,7 +67,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="61dc6f48-42ba-4132-87f9-b1175308a83a" active="true" signed="true">
+      <connection id="39cb4ad4-cea5-4211-ac6b-9da850317cd9" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -81,7 +80,7 @@
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="5432" />
-          <database value="note" />
+          <database value="test" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />
           <deprecated-pwd value="MTAwNg==" />
